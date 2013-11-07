@@ -201,7 +201,8 @@ public class SSTableWriter extends SSTable
         ColumnIndex.Builder builder = new ColumnIndex.Builder(cf, key.key, out);
         ColumnIndex index = builder.build(cf);
 
-        out.writeShort(END_OF_ROW);
+        //out.writeShort(END_OF_ROW);
+        out.writeByte(0x20);
         return RowIndexEntry.create(startPosition, cf.deletionInfo().getTopLevelDeletion(), index);
     }
 
@@ -260,7 +261,8 @@ public class SSTableWriter extends SSTable
             }
 
             columnIndexer.maybeWriteEmptyRowHeader();
-            dataFile.stream.writeShort(END_OF_ROW);
+            //            dataFile.stream.writeShort(END_OF_ROW);
+            dataFile.stream.writeByte(0x20);
         }
         catch (IOException e)
         {
