@@ -34,6 +34,7 @@ public class ColumnSerializer implements ISerializer<Column>
     public final static int COUNTER_MASK         = 0x04;
     public final static int COUNTER_UPDATE_MASK  = 0x08;
     public final static int RANGE_TOMBSTONE_MASK = 0x10;
+    public final static int END_OF_ROW_FLAG      = 0x20;
 
     /**
      * Flag affecting deserialization behavior.
@@ -54,10 +55,10 @@ public class ColumnSerializer implements ISerializer<Column>
     public void serialize(Column column, DataOutput out) throws IOException
     {
         assert column.name().remaining() > 0;
+        out.writeByte(column.serializationFlags());
         ByteBufferUtil.writeWithShortLength(column.name(), out);
         try
         {
-            out.writeByte(column.serializationFlags());
             if (column instanceof CounterColumn)
             {
                 out.writeLong(((CounterColumn)column).timestampOfLastDelete());
@@ -93,11 +94,10 @@ public class ColumnSerializer implements ISerializer<Column>
 
     public Column deserialize(DataInput in, ColumnSerializer.Flag flag, int expireBefore) throws IOException
     {
+        int b = in.readUnsignedByte();
         ByteBuffer name = ByteBufferUtil.readWithShortLength(in);
         if (name.remaining() <= 0)
             throw CorruptColumnException.create(in, name);
-
-        int b = in.readUnsignedByte();
         return deserializeColumnBody(in, name, b, flag, expireBefore);
     }
 
