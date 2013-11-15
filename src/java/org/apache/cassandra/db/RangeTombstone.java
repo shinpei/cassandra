@@ -256,20 +256,20 @@ public class RangeTombstone extends Interval<ByteBuffer, DeletionTime> implement
     {
         public void serializeForSSTable(RangeTombstone t, DataOutput out) throws IOException
         {
-            ByteBufferUtil.writeWithShortLength(t.min, out);
             out.writeByte(ColumnSerializer.RANGE_TOMBSTONE_MASK);
+            ByteBufferUtil.writeWithShortLength(t.min, out);
             ByteBufferUtil.writeWithShortLength(t.max, out);
             DeletionTime.serializer.serialize(t.data, out);
         }
 
         public RangeTombstone deserializeFromSSTable(DataInput in, Descriptor.Version version) throws IOException
         {
+            int b = in.readUnsignedByte();
+            assert (b & ColumnSerializer.RANGE_TOMBSTONE_MASK) != 0;
             ByteBuffer min = ByteBufferUtil.readWithShortLength(in);
             if (min.remaining() <= 0)
                 throw ColumnSerializer.CorruptColumnException.create(in, min);
 
-            int b = in.readUnsignedByte();
-            assert (b & ColumnSerializer.RANGE_TOMBSTONE_MASK) != 0;
             return deserializeBody(in, min, version);
         }
 
