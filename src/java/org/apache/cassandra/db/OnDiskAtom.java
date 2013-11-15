@@ -72,14 +72,16 @@ public interface OnDiskAtom
         public OnDiskAtom deserializeFromSSTable(DataInput in, ColumnSerializer.Flag flag, int expireBefore, Descriptor.Version version) throws IOException
         {
             int b = in.readUnsignedByte();
-            if (b == 0xca) {
-                b = in.readUnsignedByte();
-                if (b == 0xfe) {
-                    System.out.println("END!!");
-                    return null;
-                } else {
+            if (b == ColumnSerializer.END_OF_ROW_FLAG) {
+                return null;
+                // b = in.readUnsignedByte();
 
-                }
+                // if (b == ColumnSerializer.END_OF_ROW_FLAG) {
+                //     System.out.println("END!!");
+                //     return null;
+                // } else {
+
+                // }
             } else {
             }
             ByteBuffer name = ByteBufferUtil.readWithShortLength(in);
