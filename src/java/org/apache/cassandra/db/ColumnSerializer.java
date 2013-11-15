@@ -29,12 +29,13 @@ import org.apache.cassandra.utils.ByteBufferUtil;
 
 public class ColumnSerializer implements ISerializer<Column>
 {
-    public final static int DELETION_MASK        = 0x01;
-    public final static int EXPIRATION_MASK      = 0x02;
-    public final static int COUNTER_MASK         = 0x04;
-    public final static int COUNTER_UPDATE_MASK  = 0x08;
-    public final static int RANGE_TOMBSTONE_MASK = 0x10;
-    public final static int END_OF_ROW_FLAG      = 0x20;
+    public final static int DELETION_MASK        = 0x01; // 1
+    public final static int EXPIRATION_MASK      = 0x02; // 2
+    public final static int COUNTER_MASK         = 0x04; // 3
+    public final static int COUNTER_UPDATE_MASK  = 0x08; // 4
+    public final static int RANGE_TOMBSTONE_MASK = 0x10; // 5
+    public final static int END_OF_ROW_FLAG      = 0x20; // 6
+    public final static int ALIAS_MASK      = 0x40; // 7
 
     /**
      * Flag affecting deserialization behavior.
