@@ -74,16 +74,8 @@ public interface OnDiskAtom
             int b = in.readUnsignedByte();
             if (b == ColumnSerializer.END_OF_ROW_FLAG) {
                 return null;
-                // b = in.readUnsignedByte();
-
-                // if (b == ColumnSerializer.END_OF_ROW_FLAG) {
-                //     System.out.println("END!!");
-                //     return null;
-                // } else {
-
-                // }
-            } else {
             }
+
             ByteBuffer name = ByteBufferUtil.readWithShortLength(in);
             if (name.remaining() <= 0)
             {
