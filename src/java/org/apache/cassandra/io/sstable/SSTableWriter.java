@@ -48,8 +48,8 @@ public class SSTableWriter extends SSTable
 
     // not very random, but the only value that can't be mistaken for a legal column-name length
     //public static final int END_OF_ROW = 0x0000;
-    //public static final int END_OF_ROW = (ColumnSerializer.END_OF_ROW_FLAG << 8) & ColumnSerializer.END_OF_ROW_FLAG;
-    public static final int END_OF_ROW = 0xcafe;
+    public static final int END_OF_ROW = (ColumnSerializer.END_OF_ROW_FLAG << 8) | ColumnSerializer.END_OF_ROW_FLAG;
+    //public static final int END_OF_ROW = 0xcafe;
     private IndexWriter iwriter;
     private SegmentedFile.Builder dbuilder;
     private final SequentialWriter dataFile;
