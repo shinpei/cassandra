@@ -40,14 +40,16 @@ import org.apache.cassandra.utils.FilterFactory;
 import org.apache.cassandra.utils.IFilter;
 import org.apache.cassandra.utils.Pair;
 import org.apache.cassandra.utils.StreamingHistogram;
+import org.apache.cassandra.db.ColumnSerializer;
 
 public class SSTableWriter extends SSTable
 {
     private static final Logger logger = LoggerFactory.getLogger(SSTableWriter.class);
 
     // not very random, but the only value that can't be mistaken for a legal column-name length
-    public static final int END_OF_ROW = 0x0000;
-
+    //public static final int END_OF_ROW = 0x0000;
+    //public static final int END_OF_ROW = (ColumnSerializer.END_OF_ROW_FLAG << 8) & ColumnSerializer.END_OF_ROW_FLAG;
+    public static final int END_OF_ROW = 0xcafe;
     private IndexWriter iwriter;
     private SegmentedFile.Builder dbuilder;
     private final SequentialWriter dataFile;
@@ -201,8 +203,7 @@ public class SSTableWriter extends SSTable
         ColumnIndex.Builder builder = new ColumnIndex.Builder(cf, key.key, out);
         ColumnIndex index = builder.build(cf);
 
-        //out.writeShort(END_OF_ROW);
-        out.writeByte(0x20);
+        out.writeShort(END_OF_ROW);
         return RowIndexEntry.create(startPosition, cf.deletionInfo().getTopLevelDeletion(), index);
     }
 
@@ -261,8 +262,7 @@ public class SSTableWriter extends SSTable
             }
 
             columnIndexer.maybeWriteEmptyRowHeader();
-            //            dataFile.stream.writeShort(END_OF_ROW);
-            dataFile.stream.writeByte(0x20);
+            dataFile.stream.writeShort(END_OF_ROW);
         }
         catch (IOException e)
         {
