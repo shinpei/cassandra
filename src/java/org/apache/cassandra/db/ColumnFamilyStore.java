@@ -873,7 +873,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     }
 
     /*
-     This is complicated because we need to preserve deleted columns, supercolumns, and columnfamilies
+     This is complicated because we need to preserve deleted columns and columnfamilies
      until they have been deleted for at least GC_GRACE_IN_SECONDS.  But, we do not need to preserve
      their contents; just the object itself as a "tombstone" that can be used to repair other
      replicas that do not know about the deletion.
@@ -885,16 +885,9 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
             return null;
         }
 
-        removeDeletedColumnsOnly(cf, gcBefore, indexer);
-        return removeDeletedCF(cf, gcBefore);
-    }
-
-    private static long removeDeletedColumnsOnly(ColumnFamily cf, int gcBefore, SecondaryIndexManager.Updater indexer)
-    {
         Iterator<Column> iter = cf.iterator();
         DeletionInfo.InOrderTester tester = cf.inOrderDeletionTester();
         boolean hasDroppedColumns = !cf.metadata.getDroppedColumns().isEmpty();
-        long removedBytes = 0;
         while (iter.hasNext())
         {
             Column c = iter.next();
@@ -906,15 +899,10 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
             {
                 iter.remove();
                 indexer.remove(c);
-                removedBytes += c.dataSize();
             }
         }
-        return removedBytes;
-    }
 
-    public static long removeDeletedColumnsOnly(ColumnFamily cf, int gcBefore)
-    {
-        return removeDeletedColumnsOnly(cf, gcBefore, SecondaryIndexManager.nullUpdater);
+        return removeDeletedCF(cf, gcBefore);
     }
 
     // returns true if
@@ -1111,6 +1099,18 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         long size = 0;
         for (Memtable mt : getDataTracker().getAllMemtables())
             size += mt.getLiveSize();
+        return size;
+    }
+
+    /**
+     * @return the size of all the memtables, including the pending flush ones and 2i memtables, if any.
+     */
+    public long getTotalAllMemtablesLiveSize()
+    {
+        long size = getAllMemtablesLiveSize();
+        if (indexManager.hasIndexes())
+            for (ColumnFamilyStore index : indexManager.getIndexesBackedByCfs())
+                size += index.getAllMemtablesLiveSize();
         return size;
     }
 
