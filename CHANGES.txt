@@ -15,9 +15,13 @@
  * Use of o.a.c.metrics in nodetool (CASSANDRA-5871, 6406)
  * Batch read from OTC's queue and cleanup (CASSANDRA-1632)
  * Secondary index support for collections (CASSANDRA-4511)
+ * SSTable metadata(Stats.db) format change (CASSANDRA-6356)
 
 
 2.0.4
+ * Fix assertion failure in filterColdSSTables (CASSANDRA-6483)
+ * Fix row tombstones in larger-than-memory compactions (CASSANDRA-6008)
+ * Fix cleanup ClassCastException (CASSANDRA-6462)
  * Reduce gossip memory use by interning VersionedValue strings (CASSANDRA-6410)
  * Allow specifying datacenters to participate in a repair (CASSANDRA-6218)
  * Fix divide-by-zero in PCI (CASSANDRA-6403)
@@ -25,15 +29,24 @@
  * Add sub-ms precision formats to the timestamp parser (CASSANDRA-6395)
  * Add snapshot space used to cfstats (CASSANDRA-6231)
  * Expose a total memtable size metric for a CF (CASSANDRA-6391)
- * cqlsh: hanlde symlinks properly (CASSANDRA-6425)
+ * cqlsh: handle symlinks properly (CASSANDRA-6425)
+ * Don't resubmit counter mutation runnables internally (CASSANDRA-6427)
 Merged from 1.2:
- * Fix thundering herd on endpoint cache invalidation (CASSANDRA-6345)
+ * Randomize batchlog candidates selection (CASSANDRA-6481)
+ * Fix thundering herd on endpoint cache invalidation (CASSANDRA-6345, 6485)
  * cqlsh: quote single quotes in strings inside collections (CASSANDRA-6172)
  * Improve gossip performance for typical messages (CASSANDRA-6409)
- * Throw IRE if a prepared has more markers than supported (CASSANDRA-5598)
+ * Throw IRE if a prepared statement has more markers than supported 
+   (CASSANDRA-5598)
  * Expose Thread metrics for the native protocol server (CASSANDRA-6234)
- * Change snapshot response message verb (CASSANDRA-6415)
+ * Change snapshot response message verb to INTERNAL to avoid dropping it 
+   (CASSANDRA-6415)
  * Warn when collection read has > 65K elements (CASSANDRA-5428)
+ * Fix cache persistence when both row and key cache are enabled 
+   (CASSANDRA-6413)
+ * (Hadoop) add describe_local_ring (CASSANDRA-6268)
+ * Fix handling of concurrent directory creation failure (CASSANDRA-6459)
+ * Randomize batchlog candidates selection (CASSANDRA-6481)
 
 
 2.0.3
@@ -71,7 +84,8 @@ Merged from 1.2:
 Merged from 1.2:
  * Optimize FD phi calculation (CASSANDRA-6386)
  * Improve initial FD phi estimate when starting up (CASSANDRA-6385)
- * Don't list CQL3 table in CLI describe even if named explicitely (CASSANDRA-5750)
+ * Don't list CQL3 table in CLI describe even if named explicitely 
+   (CASSANDRA-5750)
  * Invalidate row cache when dropping CF (CASSANDRA-6351)
  * add non-jamm path for cached statements (CASSANDRA-6293)
  * (Hadoop) Require CFRR batchSize to be at least 2 (CASSANDRA-6114)
@@ -359,6 +373,7 @@ Merged from 1.2:
 
 
 2.0.0-beta1
+ * Add support for indexing clustered columns (CASSANDRA-5125)
  * Removed on-heap row cache (CASSANDRA-5348)
  * use nanotime consistently for node-local timeouts (CASSANDRA-5581)
  * Avoid unnecessary second pass on name-based queries (CASSANDRA-5577)

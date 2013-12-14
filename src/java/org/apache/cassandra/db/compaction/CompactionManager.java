@@ -46,6 +46,7 @@ import org.apache.cassandra.dht.Bounds;
 import org.apache.cassandra.dht.Range;
 import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.io.sstable.*;
+import org.apache.cassandra.io.sstable.metadata.MetadataCollector;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.metrics.CompactionMetrics;
 import org.apache.cassandra.repair.Validator;
@@ -560,7 +561,7 @@ public class CompactionManager implements CompactionManagerMBean
                 throw new IOException("disk full");
 
             ICompactionScanner scanner = cleanupStrategy.getScanner(sstable, getRateLimiter());
-            CleanupInfo ci = new CleanupInfo(sstable, (SSTableScanner)scanner);
+            CleanupInfo ci = new CleanupInfo(sstable, scanner);
 
             metrics.beginCompaction(ci);
             SSTableWriter writer = createWriter(cfs,
@@ -738,7 +739,7 @@ public class CompactionManager implements CompactionManagerMBean
                                  expectedBloomFilterSize,
                                  cfs.metadata,
                                  cfs.partitioner,
-                                 SSTableMetadata.createCollector(Collections.singleton(sstable), cfs.metadata.comparator, sstable.getSSTableLevel()));
+                                 new MetadataCollector(Collections.singleton(sstable), cfs.metadata.comparator, sstable.getSSTableLevel()));
     }
 
     /**
@@ -1052,9 +1053,9 @@ public class CompactionManager implements CompactionManagerMBean
     private static class CleanupInfo extends CompactionInfo.Holder
     {
         private final SSTableReader sstable;
-        private final SSTableScanner scanner;
+        private final ICompactionScanner scanner;
 
-        public CleanupInfo(SSTableReader sstable, SSTableScanner scanner)
+        public CleanupInfo(SSTableReader sstable, ICompactionScanner scanner)
         {
             this.sstable = sstable;
             this.scanner = scanner;
