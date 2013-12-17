@@ -112,7 +112,8 @@ public final class CFMetaData
                                                                + "keyspace_name text PRIMARY KEY,"
                                                                + "durable_writes boolean,"
                                                                + "strategy_class text,"
-                                                               + "strategy_options text"
+                                                               + "strategy_options text,"
+                                                               + "static_alias text"
                                                                + ") WITH COMPACT STORAGE AND COMMENT='keyspace definitions' AND gc_grace_seconds=8640");
 
     public static final CFMetaData SchemaColumnFamiliesCf = compile("CREATE TABLE " + SystemKeyspace.SCHEMA_COLUMNFAMILIES_CF + " ("
