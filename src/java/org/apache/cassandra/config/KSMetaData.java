@@ -41,13 +41,15 @@ public final class KSMetaData
     public final Class<? extends AbstractReplicationStrategy> strategyClass;
     public final Map<String, String> strategyOptions;
     private final Map<String, CFMetaData> cfMetaData;
+    private final List<String> static_alias;
     public final boolean durableWrites;
 
-    KSMetaData(String name, Class<? extends AbstractReplicationStrategy> strategyClass, Map<String, String> strategyOptions, boolean durableWrites, Iterable<CFMetaData> cfDefs)
+    KSMetaData(String name, Class<? extends AbstractReplicationStrategy> strategyClass, Map<String, String> strategyOptions, boolean durableWrites, List<String> static_alias, Iterable<CFMetaData> cfDefs)
     {
         this.name = name;
         this.strategyClass = strategyClass == null ? NetworkTopologyStrategy.class : strategyClass;
         this.strategyOptions = strategyOptions;
+        this.static_alias = static_alias == null ? null : static_alias;
         Map<String, CFMetaData> cfmap = new HashMap<String, CFMetaData>();
         for (CFMetaData cfm : cfDefs)
             cfmap.put(cfm.cfName, cfm);
@@ -67,12 +69,12 @@ public final class KSMetaData
 
     public static KSMetaData newKeyspace(String name, Class<? extends AbstractReplicationStrategy> strategyClass, Map<String, String> options, boolean durablesWrites, Iterable<CFMetaData> cfDefs)
     {
-        return new KSMetaData(name, strategyClass, options, durablesWrites, cfDefs);
+        return new KSMetaData(name, strategyClass, options, durablesWrites,null, cfDefs);
     }
 
     public static KSMetaData cloneWith(KSMetaData ksm, Iterable<CFMetaData> cfDefs)
     {
-        return new KSMetaData(ksm.name, ksm.strategyClass, ksm.strategyOptions, ksm.durableWrites, cfDefs);
+        return new KSMetaData(ksm.name, ksm.strategyClass, ksm.strategyOptions, ksm.durableWrites, ksm.static_alias, cfDefs);
     }
 
     public static KSMetaData systemKeyspace()
@@ -94,23 +96,23 @@ public final class KSMetaData
                                                 CFMetaData.CompactionHistoryCf,
                                                 CFMetaData.PaxosCf,
                                                 CFMetaData.SSTableActivityCF);
-        return new KSMetaData(Keyspace.SYSTEM_KS, LocalStrategy.class, Collections.<String, String>emptyMap(), true, cfDefs);
+        return new KSMetaData(Keyspace.SYSTEM_KS, LocalStrategy.class, Collections.<String, String>emptyMap(), true, null, cfDefs);
     }
 
     public static KSMetaData traceKeyspace()
     {
         List<CFMetaData> cfDefs = Arrays.asList(CFMetaData.TraceSessionsCf, CFMetaData.TraceEventsCf);
-        return new KSMetaData(Tracing.TRACE_KS, SimpleStrategy.class, ImmutableMap.of("replication_factor", "2"), true, cfDefs);
+        return new KSMetaData(Tracing.TRACE_KS, SimpleStrategy.class, ImmutableMap.of("replication_factor", "2"), true, null, cfDefs);
     }
 
     public static KSMetaData testMetadata(String name, Class<? extends AbstractReplicationStrategy> strategyClass, Map<String, String> strategyOptions, CFMetaData... cfDefs)
     {
-        return new KSMetaData(name, strategyClass, strategyOptions, true, Arrays.asList(cfDefs));
+        return new KSMetaData(name, strategyClass, strategyOptions, true, null, Arrays.asList(cfDefs));
     }
 
     public static KSMetaData testMetadataNotDurable(String name, Class<? extends AbstractReplicationStrategy> strategyClass, Map<String, String> strategyOptions, CFMetaData... cfDefs)
     {
-        return new KSMetaData(name, strategyClass, strategyOptions, false, Arrays.asList(cfDefs));
+        return new KSMetaData(name, strategyClass, strategyOptions, false, null, Arrays.asList(cfDefs));
     }
 
     public int hashCode()
@@ -127,7 +129,8 @@ public final class KSMetaData
                 && ObjectUtils.equals(other.strategyClass, strategyClass)
                 && ObjectUtils.equals(other.strategyOptions, strategyOptions)
                 && other.cfMetaData.equals(cfMetaData)
-                && other.durableWrites == durableWrites;
+                && other.durableWrites == durableWrites
+                && other.static_alias.equals(static_alias);
     }
 
     public Map<String, CFMetaData> cfMetaData()
@@ -148,7 +151,9 @@ public final class KSMetaData
           .append(", strategy_options: ")
           .append(strategyOptions.toString())
           .append(", durable_writes: ")
-          .append(durableWrites);
+          .append(durableWrites)
+          .append(", static_alias: ")
+          .append(static_alias);
         return sb.toString();
     }
 
@@ -175,6 +180,7 @@ public final class KSMetaData
                               cls,
                               ksd.strategy_options == null ? Collections.<String, String>emptyMap() : ksd.strategy_options,
                               ksd.durable_writes,
+                ksd.shinpei_alias,
                               Arrays.asList(cfDefs));
     }
 
@@ -268,6 +274,7 @@ public final class KSMetaData
                                   AbstractReplicationStrategy.getClass(result.getString("strategy_class")),
                                   fromJsonMap(result.getString("strategy_options")),
                                   result.getBoolean("durable_writes"),
+                                  null,
                                   cfms);
         }
         catch (ConfigurationException e)

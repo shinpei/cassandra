@@ -43,6 +43,7 @@ public class KSMetaDataTest
                                             SimpleStrategy.class,
                                             options,
                                             true,
+                                            null,
                                             Collections.<CFMetaData>emptyList());
 
         assertTrue(ksMeta.toString().contains(options.toString()));
