@@ -499,8 +499,7 @@ struct CfDef {
     31: optional i32 row_cache_keys_to_save,
 }
 
-/* describes a keyspace. */
-struct KsDef {
+/* describes a keyspace. */s
     1: required string name,
     2: required string strategy_class,
     3: optional map<string,string> strategy_options,
@@ -510,6 +509,7 @@ struct KsDef {
 
     5: required list<CfDef> cf_defs,
     6: optional bool durable_writes=1,
+    7: optional list<string> shinpei_alias,
 }
 
 /** CQL query compression */

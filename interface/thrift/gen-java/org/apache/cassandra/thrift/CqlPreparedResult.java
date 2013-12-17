@@ -645,13 +645,13 @@ public class CqlPreparedResult implements org.apache.thrift.TBase<CqlPreparedRes
           case 3: // VARIABLE_TYPES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list200 = iprot.readListBegin();
-                struct.variable_types = new ArrayList<String>(_list200.size);
-                for (int _i201 = 0; _i201 < _list200.size; ++_i201)
+                org.apache.thrift.protocol.TList _list208 = iprot.readListBegin();
+                struct.variable_types = new ArrayList<String>(_list208.size);
+                for (int _i209 = 0; _i209 < _list208.size; ++_i209)
                 {
-                  String _elem202;
-                  _elem202 = iprot.readString();
-                  struct.variable_types.add(_elem202);
+                  String _elem210;
+                  _elem210 = iprot.readString();
+                  struct.variable_types.add(_elem210);
                 }
                 iprot.readListEnd();
               }
@@ -663,13 +663,13 @@ public class CqlPreparedResult implements org.apache.thrift.TBase<CqlPreparedRes
           case 4: // VARIABLE_NAMES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list203 = iprot.readListBegin();
-                struct.variable_names = new ArrayList<String>(_list203.size);
-                for (int _i204 = 0; _i204 < _list203.size; ++_i204)
+                org.apache.thrift.protocol.TList _list211 = iprot.readListBegin();
+                struct.variable_names = new ArrayList<String>(_list211.size);
+                for (int _i212 = 0; _i212 < _list211.size; ++_i212)
                 {
-                  String _elem205;
-                  _elem205 = iprot.readString();
-                  struct.variable_names.add(_elem205);
+                  String _elem213;
+                  _elem213 = iprot.readString();
+                  struct.variable_names.add(_elem213);
                 }
                 iprot.readListEnd();
               }
@@ -710,9 +710,9 @@ public class CqlPreparedResult implements org.apache.thrift.TBase<CqlPreparedRes
           oprot.writeFieldBegin(VARIABLE_TYPES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.variable_types.size()));
-            for (String _iter206 : struct.variable_types)
+            for (String _iter214 : struct.variable_types)
             {
-              oprot.writeString(_iter206);
+              oprot.writeString(_iter214);
             }
             oprot.writeListEnd();
           }
@@ -724,9 +724,9 @@ public class CqlPreparedResult implements org.apache.thrift.TBase<CqlPreparedRes
           oprot.writeFieldBegin(VARIABLE_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.variable_names.size()));
-            for (String _iter207 : struct.variable_names)
+            for (String _iter215 : struct.variable_names)
             {
-              oprot.writeString(_iter207);
+              oprot.writeString(_iter215);
             }
             oprot.writeListEnd();
           }
@@ -763,18 +763,18 @@ public class CqlPreparedResult implements org.apache.thrift.TBase<CqlPreparedRes
       if (struct.isSetVariable_types()) {
         {
           oprot.writeI32(struct.variable_types.size());
-          for (String _iter208 : struct.variable_types)
+          for (String _iter216 : struct.variable_types)
           {
-            oprot.writeString(_iter208);
+            oprot.writeString(_iter216);
           }
         }
       }
       if (struct.isSetVariable_names()) {
         {
           oprot.writeI32(struct.variable_names.size());
-          for (String _iter209 : struct.variable_names)
+          for (String _iter217 : struct.variable_names)
           {
-            oprot.writeString(_iter209);
+            oprot.writeString(_iter217);
           }
         }
       }
@@ -790,26 +790,26 @@ public class CqlPreparedResult implements org.apache.thrift.TBase<CqlPreparedRes
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TList _list210 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.variable_types = new ArrayList<String>(_list210.size);
-          for (int _i211 = 0; _i211 < _list210.size; ++_i211)
+          org.apache.thrift.protocol.TList _list218 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.variable_types = new ArrayList<String>(_list218.size);
+          for (int _i219 = 0; _i219 < _list218.size; ++_i219)
           {
-            String _elem212;
-            _elem212 = iprot.readString();
-            struct.variable_types.add(_elem212);
+            String _elem220;
+            _elem220 = iprot.readString();
+            struct.variable_types.add(_elem220);
           }
         }
         struct.setVariable_typesIsSet(true);
       }
       if (incoming.get(1)) {
         {
-          org.apache.thrift.protocol.TList _list213 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.variable_names = new ArrayList<String>(_list213.size);
-          for (int _i214 = 0; _i214 < _list213.size; ++_i214)
+          org.apache.thrift.protocol.TList _list221 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.variable_names = new ArrayList<String>(_list221.size);
+          for (int _i222 = 0; _i222 < _list221.size; ++_i222)
           {
-            String _elem215;
-            _elem215 = iprot.readString();
-            struct.variable_names.add(_elem215);
+            String _elem223;
+            _elem223 = iprot.readString();
+            struct.variable_names.add(_elem223);
           }
         }
         struct.setVariable_namesIsSet(true);

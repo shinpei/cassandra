@@ -63,6 +63,7 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
   private static final org.apache.thrift.protocol.TField REPLICATION_FACTOR_FIELD_DESC = new org.apache.thrift.protocol.TField("replication_factor", org.apache.thrift.protocol.TType.I32, (short)4);
   private static final org.apache.thrift.protocol.TField CF_DEFS_FIELD_DESC = new org.apache.thrift.protocol.TField("cf_defs", org.apache.thrift.protocol.TType.LIST, (short)5);
   private static final org.apache.thrift.protocol.TField DURABLE_WRITES_FIELD_DESC = new org.apache.thrift.protocol.TField("durable_writes", org.apache.thrift.protocol.TType.BOOL, (short)6);
+  private static final org.apache.thrift.protocol.TField SHINPEI_ALIAS_FIELD_DESC = new org.apache.thrift.protocol.TField("shinpei_alias", org.apache.thrift.protocol.TType.LIST, (short)7);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -79,6 +80,7 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
   public int replication_factor; // optional
   public List<CfDef> cf_defs; // required
   public boolean durable_writes; // optional
+  public List<String> shinpei_alias; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -90,7 +92,8 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
      */
     REPLICATION_FACTOR((short)4, "replication_factor"),
     CF_DEFS((short)5, "cf_defs"),
-    DURABLE_WRITES((short)6, "durable_writes");
+    DURABLE_WRITES((short)6, "durable_writes"),
+    SHINPEI_ALIAS((short)7, "shinpei_alias");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -117,6 +120,8 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
           return CF_DEFS;
         case 6: // DURABLE_WRITES
           return DURABLE_WRITES;
+        case 7: // SHINPEI_ALIAS
+          return SHINPEI_ALIAS;
         default:
           return null;
       }
@@ -160,7 +165,7 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
   private static final int __REPLICATION_FACTOR_ISSET_ID = 0;
   private static final int __DURABLE_WRITES_ISSET_ID = 1;
   private byte __isset_bitfield = 0;
-  private _Fields optionals[] = {_Fields.STRATEGY_OPTIONS,_Fields.REPLICATION_FACTOR,_Fields.DURABLE_WRITES};
+  private _Fields optionals[] = {_Fields.STRATEGY_OPTIONS,_Fields.REPLICATION_FACTOR,_Fields.DURABLE_WRITES,_Fields.SHINPEI_ALIAS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -179,6 +184,9 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CfDef.class))));
     tmpMap.put(_Fields.DURABLE_WRITES, new org.apache.thrift.meta_data.FieldMetaData("durable_writes", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
+    tmpMap.put(_Fields.SHINPEI_ALIAS, new org.apache.thrift.meta_data.FieldMetaData("shinpei_alias", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(KsDef.class, metaDataMap);
   }
@@ -223,6 +231,10 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       this.cf_defs = __this__cf_defs;
     }
     this.durable_writes = other.durable_writes;
+    if (other.isSetShinpei_alias()) {
+      List<String> __this__shinpei_alias = new ArrayList<String>(other.shinpei_alias);
+      this.shinpei_alias = __this__shinpei_alias;
+    }
   }
 
   public KsDef deepCopy() {
@@ -239,6 +251,7 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
     this.cf_defs = null;
     this.durable_writes = true;
 
+    this.shinpei_alias = null;
   }
 
   public String getName() {
@@ -415,6 +428,45 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __DURABLE_WRITES_ISSET_ID, value);
   }
 
+  public int getShinpei_aliasSize() {
+    return (this.shinpei_alias == null) ? 0 : this.shinpei_alias.size();
+  }
+
+  public java.util.Iterator<String> getShinpei_aliasIterator() {
+    return (this.shinpei_alias == null) ? null : this.shinpei_alias.iterator();
+  }
+
+  public void addToShinpei_alias(String elem) {
+    if (this.shinpei_alias == null) {
+      this.shinpei_alias = new ArrayList<String>();
+    }
+    this.shinpei_alias.add(elem);
+  }
+
+  public List<String> getShinpei_alias() {
+    return this.shinpei_alias;
+  }
+
+  public KsDef setShinpei_alias(List<String> shinpei_alias) {
+    this.shinpei_alias = shinpei_alias;
+    return this;
+  }
+
+  public void unsetShinpei_alias() {
+    this.shinpei_alias = null;
+  }
+
+  /** Returns true if field shinpei_alias is set (has been assigned a value) and false otherwise */
+  public boolean isSetShinpei_alias() {
+    return this.shinpei_alias != null;
+  }
+
+  public void setShinpei_aliasIsSet(boolean value) {
+    if (!value) {
+      this.shinpei_alias = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case NAME:
@@ -465,6 +517,14 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       }
       break;
 
+    case SHINPEI_ALIAS:
+      if (value == null) {
+        unsetShinpei_alias();
+      } else {
+        setShinpei_alias((List<String>)value);
+      }
+      break;
+
     }
   }
 
@@ -487,6 +547,9 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
 
     case DURABLE_WRITES:
       return Boolean.valueOf(isDurable_writes());
+
+    case SHINPEI_ALIAS:
+      return getShinpei_alias();
 
     }
     throw new IllegalStateException();
@@ -511,6 +574,8 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       return isSetCf_defs();
     case DURABLE_WRITES:
       return isSetDurable_writes();
+    case SHINPEI_ALIAS:
+      return isSetShinpei_alias();
     }
     throw new IllegalStateException();
   }
@@ -582,6 +647,15 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
         return false;
     }
 
+    boolean this_present_shinpei_alias = true && this.isSetShinpei_alias();
+    boolean that_present_shinpei_alias = true && that.isSetShinpei_alias();
+    if (this_present_shinpei_alias || that_present_shinpei_alias) {
+      if (!(this_present_shinpei_alias && that_present_shinpei_alias))
+        return false;
+      if (!this.shinpei_alias.equals(that.shinpei_alias))
+        return false;
+    }
+
     return true;
   }
 
@@ -618,6 +692,11 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
     builder.append(present_durable_writes);
     if (present_durable_writes)
       builder.append(durable_writes);
+
+    boolean present_shinpei_alias = true && (isSetShinpei_alias());
+    builder.append(present_shinpei_alias);
+    if (present_shinpei_alias)
+      builder.append(shinpei_alias);
 
     return builder.toHashCode();
   }
@@ -690,6 +769,16 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetShinpei_alias()).compareTo(other.isSetShinpei_alias());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetShinpei_alias()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.shinpei_alias, other.shinpei_alias);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -753,6 +842,16 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       if (!first) sb.append(", ");
       sb.append("durable_writes:");
       sb.append(this.durable_writes);
+      first = false;
+    }
+    if (isSetShinpei_alias()) {
+      if (!first) sb.append(", ");
+      sb.append("shinpei_alias:");
+      if (this.shinpei_alias == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.shinpei_alias);
+      }
       first = false;
     }
     sb.append(")");
@@ -880,6 +979,24 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 7: // SHINPEI_ALIAS
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list153 = iprot.readListBegin();
+                struct.shinpei_alias = new ArrayList<String>(_list153.size);
+                for (int _i154 = 0; _i154 < _list153.size; ++_i154)
+                {
+                  String _elem155;
+                  _elem155 = iprot.readString();
+                  struct.shinpei_alias.add(_elem155);
+                }
+                iprot.readListEnd();
+              }
+              struct.setShinpei_aliasIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -910,10 +1027,10 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
           oprot.writeFieldBegin(STRATEGY_OPTIONS_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.strategy_options.size()));
-            for (Map.Entry<String, String> _iter153 : struct.strategy_options.entrySet())
+            for (Map.Entry<String, String> _iter156 : struct.strategy_options.entrySet())
             {
-              oprot.writeString(_iter153.getKey());
-              oprot.writeString(_iter153.getValue());
+              oprot.writeString(_iter156.getKey());
+              oprot.writeString(_iter156.getValue());
             }
             oprot.writeMapEnd();
           }
@@ -929,9 +1046,9 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
         oprot.writeFieldBegin(CF_DEFS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.cf_defs.size()));
-          for (CfDef _iter154 : struct.cf_defs)
+          for (CfDef _iter157 : struct.cf_defs)
           {
-            _iter154.write(oprot);
+            _iter157.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -941,6 +1058,20 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
         oprot.writeFieldBegin(DURABLE_WRITES_FIELD_DESC);
         oprot.writeBool(struct.durable_writes);
         oprot.writeFieldEnd();
+      }
+      if (struct.shinpei_alias != null) {
+        if (struct.isSetShinpei_alias()) {
+          oprot.writeFieldBegin(SHINPEI_ALIAS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.shinpei_alias.size()));
+            for (String _iter158 : struct.shinpei_alias)
+            {
+              oprot.writeString(_iter158);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -963,9 +1094,9 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       oprot.writeString(struct.strategy_class);
       {
         oprot.writeI32(struct.cf_defs.size());
-        for (CfDef _iter155 : struct.cf_defs)
+        for (CfDef _iter159 : struct.cf_defs)
         {
-          _iter155.write(oprot);
+          _iter159.write(oprot);
         }
       }
       BitSet optionals = new BitSet();
@@ -978,14 +1109,17 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       if (struct.isSetDurable_writes()) {
         optionals.set(2);
       }
-      oprot.writeBitSet(optionals, 3);
+      if (struct.isSetShinpei_alias()) {
+        optionals.set(3);
+      }
+      oprot.writeBitSet(optionals, 4);
       if (struct.isSetStrategy_options()) {
         {
           oprot.writeI32(struct.strategy_options.size());
-          for (Map.Entry<String, String> _iter156 : struct.strategy_options.entrySet())
+          for (Map.Entry<String, String> _iter160 : struct.strategy_options.entrySet())
           {
-            oprot.writeString(_iter156.getKey());
-            oprot.writeString(_iter156.getValue());
+            oprot.writeString(_iter160.getKey());
+            oprot.writeString(_iter160.getValue());
           }
         }
       }
@@ -994,6 +1128,15 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       }
       if (struct.isSetDurable_writes()) {
         oprot.writeBool(struct.durable_writes);
+      }
+      if (struct.isSetShinpei_alias()) {
+        {
+          oprot.writeI32(struct.shinpei_alias.size());
+          for (String _iter161 : struct.shinpei_alias)
+          {
+            oprot.writeString(_iter161);
+          }
+        }
       }
     }
 
@@ -1005,29 +1148,29 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       struct.strategy_class = iprot.readString();
       struct.setStrategy_classIsSet(true);
       {
-        org.apache.thrift.protocol.TList _list157 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-        struct.cf_defs = new ArrayList<CfDef>(_list157.size);
-        for (int _i158 = 0; _i158 < _list157.size; ++_i158)
+        org.apache.thrift.protocol.TList _list162 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.cf_defs = new ArrayList<CfDef>(_list162.size);
+        for (int _i163 = 0; _i163 < _list162.size; ++_i163)
         {
-          CfDef _elem159;
-          _elem159 = new CfDef();
-          _elem159.read(iprot);
-          struct.cf_defs.add(_elem159);
+          CfDef _elem164;
+          _elem164 = new CfDef();
+          _elem164.read(iprot);
+          struct.cf_defs.add(_elem164);
         }
       }
       struct.setCf_defsIsSet(true);
-      BitSet incoming = iprot.readBitSet(3);
+      BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
         {
-          org.apache.thrift.protocol.TMap _map160 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.strategy_options = new HashMap<String,String>(2*_map160.size);
-          for (int _i161 = 0; _i161 < _map160.size; ++_i161)
+          org.apache.thrift.protocol.TMap _map165 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.strategy_options = new HashMap<String,String>(2*_map165.size);
+          for (int _i166 = 0; _i166 < _map165.size; ++_i166)
           {
-            String _key162;
-            String _val163;
-            _key162 = iprot.readString();
-            _val163 = iprot.readString();
-            struct.strategy_options.put(_key162, _val163);
+            String _key167;
+            String _val168;
+            _key167 = iprot.readString();
+            _val168 = iprot.readString();
+            struct.strategy_options.put(_key167, _val168);
           }
         }
         struct.setStrategy_optionsIsSet(true);
@@ -1039,6 +1182,19 @@ public class KsDef implements org.apache.thrift.TBase<KsDef, KsDef._Fields>, jav
       if (incoming.get(2)) {
         struct.durable_writes = iprot.readBool();
         struct.setDurable_writesIsSet(true);
+      }
+      if (incoming.get(3)) {
+        {
+          org.apache.thrift.protocol.TList _list169 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.shinpei_alias = new ArrayList<String>(_list169.size);
+          for (int _i170 = 0; _i170 < _list169.size; ++_i170)
+          {
+            String _elem171;
+            _elem171 = iprot.readString();
+            struct.shinpei_alias.add(_elem171);
+          }
+        }
+        struct.setShinpei_aliasIsSet(true);
       }
     }
   }
