@@ -49,12 +49,13 @@ public final class KSMetaData
         this.name = name;
         this.strategyClass = strategyClass == null ? NetworkTopologyStrategy.class : strategyClass;
         this.strategyOptions = strategyOptions;
-        this.staticAlias = staticAlias == null ? null : staticAlias;
+        this.staticAlias = staticAlias == null ? new ArrayList<String>() : staticAlias;
         Map<String, CFMetaData> cfmap = new HashMap<String, CFMetaData>();
         for (CFMetaData cfm : cfDefs)
             cfmap.put(cfm.cfName, cfm);
         this.cfMetaData = Collections.unmodifiableMap(cfmap);
         this.durableWrites = durableWrites;
+        System.out.println("Direct!!!!!!!!!! Name=" + name);
     }
 
     // For new user created keyspaces (through CQL)
@@ -69,7 +70,8 @@ public final class KSMetaData
 
     public static KSMetaData newKeyspace(String name, Class<? extends AbstractReplicationStrategy> strategyClass, Map<String, String> options, boolean durablesWrites, Iterable<CFMetaData> cfDefs)
     {
-        return new KSMetaData(name, strategyClass, options, durablesWrites,null, cfDefs);
+        // maybe, we'll insert default map from config.yaml
+        return new KSMetaData(name, strategyClass, options, durablesWrites, null, cfDefs);
     }
 
     public static KSMetaData cloneWith(KSMetaData ksm, Iterable<CFMetaData> cfDefs)
@@ -196,6 +198,7 @@ public final class KSMetaData
         KsDef ksdef = new KsDef(name, strategyClass.getName(), cfDefs);
         ksdef.setStrategy_options(strategyOptions);
         ksdef.setDurable_writes(durableWrites);
+        ksdef.setShinpei_alias(staticAlias);
 
         return ksdef;
     }
@@ -270,6 +273,10 @@ public final class KSMetaData
         UntypedResultSet.Row result = QueryProcessor.resultify("SELECT * FROM system.schema_keyspaces", row).one();
         try
         {
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" +
+                    result.getString("static_alias")
+                    /* + ", " + result.getString("hogehoge")*/
+            );
             return new KSMetaData(result.getString("keyspace_name"),
                                   AbstractReplicationStrategy.getClass(result.getString("strategy_class")),
                                   fromJsonMap(result.getString("strategy_options")),

@@ -474,6 +474,15 @@ public class DatabaseDescriptor
             allocatorClass = "org.apache.cassandra.utils." + allocatorClass;
         memtableAllocator = FBUtilities.classForName(allocatorClass, "allocator");
 
+        // Load static alias map
+        if (conf.static_alias_in_json != "") {
+            try {
+                List<String> static_alias = FBUtilities.fromJsonList(conf.static_alias_in_json);
+            } catch (RuntimeException re) {
+                logger.error("loading static alias failed " + re.getMessage());
+            }
+        }
+
         // Hardcoded system keyspaces
         List<KSMetaData> systemKeyspaces = Arrays.asList(KSMetaData.systemKeyspace());
         assert systemKeyspaces.size() == Schema.systemKeyspaceNames.size();
@@ -499,6 +508,7 @@ public class DatabaseDescriptor
         }
         if (seedProvider.getSeeds().size() == 0)
             throw new ConfigurationException("The seed provider lists no seeds.");
+
     }
 
     private static IEndpointSnitch createEndpointSnitch(String snitchClassName) throws ConfigurationException

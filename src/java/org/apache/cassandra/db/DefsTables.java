@@ -87,6 +87,7 @@ import org.apache.cassandra.utils.ByteBufferUtil;
  *  => (column=replication_factor, value=0, timestamp=1327061028312185000)
  *  => (column=strategy_class, value="org.apache.cassandra.locator.NetworkTopologyStrategy", timestamp=1327061028312185000)
  *  => (column=strategy_options, value={"datacenter1":"1"}, timestamp=1327061028312185000)
+ *  => (column=static_alias, value=['bra', 'bra', 'bra'], timestamp=1327061028312185000)
  *
  * schema_columnfamilies
  * ---------------------

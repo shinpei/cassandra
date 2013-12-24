@@ -1198,10 +1198,8 @@ public class CliClient
     private KsDef updateKsDefAttributes(Tree statement, KsDef ksDefToUpdate)
     {
         KsDef ksDef = new KsDef(ksDefToUpdate);
-
         // removing all column definitions - thrift system_update_keyspace method requires that
         ksDef.setCf_defs(new LinkedList<CfDef>());
-
         for(int i = 1; i < statement.getChildCount(); i += 2)
         {
             String currentStatement = statement.getChild(i).getText().toUpperCase();

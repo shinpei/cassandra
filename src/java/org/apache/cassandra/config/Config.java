@@ -99,6 +99,7 @@ public class Config
     public Integer native_transport_max_threads = 128;
     public Integer native_transport_max_frame_size_in_mb = 256;
 
+    public String static_alias_in_json = "";
     @Deprecated
     public Integer thrift_max_message_length_in_mb = 16;
 
