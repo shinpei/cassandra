@@ -94,6 +94,8 @@ public class DatabaseDescriptor
 
     private static Class<? extends Allocator> memtableAllocator;
 
+    private static List<String> staticAliasForDatabase;
+
     static
     {
         // In client mode, we use a default configuration. Note that the fields of this class will be
@@ -477,9 +479,9 @@ public class DatabaseDescriptor
         // Load static alias map
         if (conf.static_alias_in_json != "") {
             try {
-                List<String> static_alias = FBUtilities.fromJsonList(conf.static_alias_in_json);
+                staticAliasForDatabase = FBUtilities.fromJsonList(conf.static_alias_in_json);
             } catch (RuntimeException re) {
-                logger.error("loading static alias failed " + re.getMessage());
+                throw new ConfigurationException(String.format("Given JSON '%s' is invalid", conf.static_alias_in_json));
             }
         }
 
@@ -1343,4 +1345,7 @@ public class DatabaseDescriptor
     {
         return conf.index_summary_resize_interval_in_minutes;
     }
+
+    public static List<String> getStaticAliasForDatabase() { return staticAliasForDatabase;}
+    public static String getStaticAliasAsJSONString() { return conf.static_alias_in_json; }
 }
